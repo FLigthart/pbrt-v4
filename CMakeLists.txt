@@ -3,6 +3,12 @@
 # Compile pbrt with cmake --build . --config Release for faster computations
 # Make sure to run with --gpu flag
 
+# Add 
+# macro(install)
+# endmacro()
+# to the CMakeLists in zlib if you get a related error
+
+
 cmake_minimum_required (VERSION 3.12)
 
 project (PBRT-V4 LANGUAGES CXX C)
