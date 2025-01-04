@@ -1,4 +1,7 @@
 # pbrt-v4 top-level CMakeLists.txt
+# COMPILES WITH THIS: cmake .. -DPBRT_OPTIX7_PATH="C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0" -DCMAKE_CUDA_ARCHITECTURES=89 -B build
+# Compile pbrt with cmake --build . --config Release for faster computations
+# Make sure to run with --gpu flag
 
 cmake_minimum_required (VERSION 3.12)
 
@@ -22,10 +25,9 @@ option (PBRT_DBG_LOGGING "Enable (very verbose!) debug logging" OFF)
 option (PBRT_NVTX "Insert NVTX annotations for NVIDIA Profiling and Debugging Tools" OFF)
 option (PBRT_NVML "Use NVML for GPU performance measurement" OFF)
 option (PBRT_USE_PREGENERATED_RGB_TO_SPECTRUM_TABLES "Use pregenerated rgbspectrum_*.cpp files rather than running rgb2spec_opt to generate them at build time" OFF)
-set (PBRT_OPTIX7_PATH $ENV{PBRT_OPTIX7_PATH} CACHE PATH "Path to OptiX 7 SDK")
+set (PBRT_OPTIX7_PATH $ENV{PBRT_OPTIX7_PATH} CACHE PATH "C:/ProgramData/NVIDIA Corporation/OptiX SDK 8.1.0")
 set (PBRT_GPU_SHADER_MODEL "" CACHE STRING "")
-
-
+set (PBRT_GPU)
 
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message (STATUS "Setting build type to 'Release' as none was specified.")
@@ -38,7 +40,7 @@ function (CHECK_EXT NAME DIR HASH)
   if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/ext/${DIR}")
     message (FATAL_ERROR "The ${NAME} submodule directory is missing! "
       "Either that submodule was recently added to pbrt or you did not clone the project with --recursive. "
-      "In order to update the submodules, run:\n"
+      "In order to update the submodules, run:\n" 
       "  \"git submodule update --init --recursive\"")
   endif ()
 
